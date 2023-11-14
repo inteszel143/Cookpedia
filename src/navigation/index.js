@@ -13,7 +13,8 @@ import SignInScreen from '../screens/SignInScreen';
 import Forgot from '../screens/Forgot';
 import YouGotEmail from '../screens/YouGotEmail';
 import CreateNewAccount from '../screens/CreateNewAccount';
-import Navigation from '../../Navigation';
+
+import HomePage from '../screens/HomePage';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,7 +34,7 @@ export default function AppNavigation() {
                 <Stack.Screen name="Forgot" component={Forgot} />
                 <Stack.Screen name="YouGotEmail" component={YouGotEmail} />
                 <Stack.Screen name="CreateNewAccount" component={CreateNewAccount} />
-                <Stack.Screen name="Navigation" component={Navigation} />
+                <Stack.Screen name='HomePage' component={HomePage} />
             </Stack.Navigator>
         </NavigationContainer>
     )

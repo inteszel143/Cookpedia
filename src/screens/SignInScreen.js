@@ -5,6 +5,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useNavigation } from '@react-navigation/native';
 import Animated, { BounceInDown } from 'react-native-reanimated';
 import { Ionicons } from 'react-native-vector-icons';
+import { setItem } from '../utils/asyncStorage';
 
 const google = require("../../assets/icons/google.png");
 const facebook = require("../../assets/icons/facebook.png");
@@ -13,6 +14,12 @@ const apple = require("../../assets/icons/apple.png");
 
 export default function SignInScreen() {
     const navigation = useNavigation();
+
+
+    const handleDone = () => {
+        navigation.navigate("HomePage");
+        setItem('onboarded', '1');
+    }
 
     return (
         <SafeAreaView className="flex-1 bg-white">
@@ -125,9 +132,6 @@ export default function SignInScreen() {
             </ScrollView>
 
 
-
-
-
             {/* BUTTON */}
             <Animated.View
                 entering={BounceInDown.delay(200).duration(500)}
@@ -135,7 +139,7 @@ export default function SignInScreen() {
                 style={{ alignSelf: 'center', height: hp(11.5) }}
             >
                 <TouchableOpacity
-                    onPress={() => navigation.navigate("Navigation")}
+                    onPress={handleDone}
                     className="bg-[#F74848] rounded-full items-center justify-center mt-2"
                     style={{ width: wp(90), height: wp(13) }}>
                     <Text

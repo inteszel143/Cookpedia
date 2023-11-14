@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import Animated, { FadeIn, BounceInUp } from 'react-native-reanimated';
 import { SkypeIndicator, } from 'react-native-indicators';
 import { useNavigation } from '@react-navigation/native';
+import { getItem } from '../utils/asyncStorage';
 
 export default function SplashScreen() {
 
@@ -24,16 +25,34 @@ export default function SplashScreen() {
         "PoppinsThinr": require("../../assets/fonts/Poppins-Thin.ttf"),
     });
 
+
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigation.push("Welcome");
+            // navigation.push("Welcome");
+            // let onboarded = await getItem('onboarded');
+            handleDoneSplash();
         }, 5000);
         return () => clearTimeout(timer);
     }, [navigation]);
 
+
+
+    const handleDoneSplash = async () => {
+        let onboarded = await getItem('onboarded');
+        if (onboarded == 1) {
+            navigation.push("HomePage");
+        } else {
+            navigation.push("Welcome");
+        }
+    };
+
+
     if (!fontsLoaded) {
         return undefined;
-    }
+    };
+
+
     return (
         <View className="flex-1 pb-14 justify-center items-center bg-[#F74848]">
             <StatusBar style='light' />

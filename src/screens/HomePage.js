@@ -1,25 +1,26 @@
 import { View, Text, useColorScheme, StatusBar, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { NavigationContainer } from '@react-navigation/native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 import * as Solid from "react-native-heroicons/solid";
 import * as OutLine from "react-native-heroicons/outline";
 
-import Home from './src/screens/tabScreens/Home';
-import Discover from './src/screens/tabScreens/Discover';
-import New from './src/screens/tabScreens/New';
-import Recipes from './src/screens/tabScreens/Recipes';
-import Profile from './src/screens/tabScreens/Profile';
+import Home from './tabScreens/Home';
+import Discover from './tabScreens/Discover';
+import New from './tabScreens/New';
+import Profile from './tabScreens/Profile';
+import Recipes from './tabScreens/Recipes';
+import Settings from './ProfileStack/Settings';
 
-export default function Navigation() {
+export default function HomePage() {
+
 
     const currentTheme = useColorScheme();
-
     const CustomTabBarButton = ({ accessibilityState, onPress }) => {
         const isFocused = accessibilityState.selected;
         return (
@@ -49,12 +50,17 @@ export default function Navigation() {
         return (
             <HomeStack.Navigator>
                 <HomeStack.Screen name="TabGroup" component={TabGroup} options={{ headerShown: false }} />
+                <HomeStack.Screen name='Settings' component={Settings}
+                    options={{
+                        headerShown: false,
+                        presentation: 'card'
+                    }}
+                />
             </HomeStack.Navigator>
         )
     };
 
 
-    // BOTTOM TABS
     const Tab = createBottomTabNavigator();
     function TabGroup() {
         return (
@@ -73,7 +79,7 @@ export default function Navigation() {
                     },
 
                     tabBarStyle: {
-                        borderTopWidth: 0,
+                        // borderTopWidth: 0,
                     },
                     tabBarLabelStyle: {
                         fontSize: wp(2.8),
@@ -82,7 +88,7 @@ export default function Navigation() {
                     tabBarActiveTintColor: "#F74848",
                 })}
             >
-                <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
+                <Tab.Screen name='Home' component={Home} options={{ headerShown: false }} />
                 <Tab.Screen name="Discover" component={Discover} />
                 <Tab.Screen name="New" component={New}
                     options={{
@@ -96,15 +102,15 @@ export default function Navigation() {
                     }}
 
                 />
-                <Tab.Screen name="Profile" component={Profile} />
-            </Tab.Navigator >
+                <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
+
+            </Tab.Navigator>
         )
     }
 
     return (
         <NavigationContainer independent={true}>
-            <StatusBar style="auto" />
-            <TabGroup />
+            <HomeStackGroup />
         </NavigationContainer>
     )
 }
